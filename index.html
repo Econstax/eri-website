@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Economic Reasoning Initiative</title>
+  <link rel="icon" type="image/png" href="assets/img/eri-logo-plain.png">
+  <link rel="apple-touch-icon" href="assets/img/eri-logo-plain.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader">
+      <div class="loader-ring"></div>
+      <span class="loader-text">ERI</span>
+    </div>
+  </div>
+
+  <!-- Cursor -->
+
+  <!-- Progress -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#home" class="nav-brand" aria-label="Economic Reasoning Initiative — Home">
+        <img src="assets/img/eri-logo-plain.png" alt="ERI" class="nav-logo">
+        <span>ERI</span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#story" class="nav-link">Our Story</a>
+        <a href="#events" class="nav-link">Events</a>
+        <a href="#competitions" class="nav-link">Competitions</a>
+        <a href="#people" class="nav-link">People</a>
+        <a href="#blog" class="nav-link">Blog</a>
+        <a href="#tutoring" class="nav-link">Tutoring</a>
+        <a href="#resources" class="nav-link">Resources</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section id="home" class="hero">
+    <canvas id="heroCanvas"></canvas>
+    <div class="hero-gradient-overlay"></div>
+    <div class="hero-orb hero-orb--pink" aria-hidden="true"></div>
+    <div class="hero-orb hero-orb--gold" aria-hidden="true"></div>
+    <div class="hero-content">
+      <h1 class="hero-title" id="heroTitle">
+        <span class="hero-line"><span class="hero-word">Empowering</span> <span class="hero-word">the</span> <span class="hero-word">Next</span></span>
+        <span class="hero-line"><span class="hero-word">Generation</span> <span class="hero-word">of</span></span>
+        <span class="hero-line hero-line--gold"><span class="hero-word">Economic</span> <span class="hero-word">Thinkers</span></span>
+      </h1>
+      <p class="hero-sub" id="heroSub">We cultivate critical economic reasoning skills through competitions, education, and community — equipping students to analyze, question, and shape the economic world around them.</p>
+      <div class="hero-actions" id="heroActions">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdjDSHGEkOSBjixUaNUgjBrnUKdPZUT8ZYpf2OgvcoJ7aFw1A/viewform?usp=publish-editor" target="_blank" class="btn-primary">
+          <span>Join the Competition</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#story" class="btn-outline">Learn Our Story</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll to explore</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ===== OUR STORY ===== -->
+  <section id="story" class="section section--dotted">
+    <div class="container">
+      <div class="section-header" data-animate="header">
+        <span class="section-tag">Who We Are</span>
+        <h2 class="section-title">Our Story</h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="story-hero" data-animate="fade">
+        <p class="display-text">Economics isn't just a subject &mdash; <span class="gold-text">it's a superpower.</span></p>
+        <p class="body-large">Every decision you make, from what you buy to who you vote for, is shaped by economics. We're on a mission to make sure you understand the forces driving the world around you.</p>
+      </div>
+
+      <div class="stats-strip" data-animate="fade">
+        <div class="stat-block">
+          <div class="stat-num">200<em>+</em></div>
+          <div class="stat-label">Students Reached</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Annual Events</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-num">4</div>
+          <div class="stat-label">Program Areas</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-num">Est.<em>'25</em></div>
+          <div class="stat-label">Founded</div>
+        </div>
+      </div>
+
+      <div class="bento-grid bento-3">
+        <div class="bento-card" data-animate="card">
+          <span class="bento-num-xl">01</span>
+          <h3>The Spark</h3>
+          <p>It started with a radical idea: <strong>what if students didn't just memorize economic theories, but actually learned to think like economists?</strong> Founded by Viyan Patel, ERI set out to change how economics is taught, learned, and applied.</p>
+        </div>
+        <div class="bento-card" data-animate="card">
+          <span class="bento-num-xl">02</span>
+          <h3>The Mission</h3>
+          <p>We bridge the gap between textbook economics and the real world. Through competitions, seminars, and hands-on programs, students learn to <strong>analyze markets, evaluate policies, and make decisions that matter.</strong></p>
+        </div>
+        <div class="bento-card" data-animate="card">
+          <span class="bento-num-xl">03</span>
+          <h3>The Movement</h3>
+          <p>What began as one student's vision grew into a <strong>community of learners, educators, and future economists.</strong> We're building a generation of economic thinkers ready to shape tomorrow.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EVENTS ===== -->
+  <section id="events" class="section section--alt section--accent-top">
+    <div class="container">
+      <div class="section-header" data-animate="header">
+        <span class="section-tag">What's Happening</span>
+        <h2 class="section-title">Events</h2>
+        <div class="section-rule"></div>
+        <p class="section-desc">From seminars to summer camps, we host events that bring economics to life.</p>
+      </div>
+      <div class="events-grid">
+        <div class="event-card event-card--featured" data-animate="slide-up">
+          <div class="event-badge">Featured</div>
+          <div class="event-date">
+            <span class="event-month">Summer</span>
+            <span class="event-year">2026</span>
+          </div>
+          <h3>Economics Summer Camp</h3>
+          <p>An immersive multi-day experience where students dive deep into microeconomics, macroeconomics, and behavioral economics through hands-on workshops, simulations, and guest lectures.</p>
+          <div class="event-meta">
+            <span class="event-tag">Location TBA</span>
+            <span class="event-tag">Open to all students</span>
+          </div>
+          <a href="signup-camp.html" class="btn-outline btn--sm">Sign Up for Camp</a>
+        </div>
+        <div class="event-card event-card--seminar">
+          <div class="event-date">
+            <span class="event-month">Monthly</span>
+            <span class="event-year">Series</span>
+          </div>
+          <h3>Economics Seminars</h3>
+          <p>Regular discussions on current economic issues, policy debates, and emerging research in the field.</p>
+          <div class="event-meta">
+            <span class="event-tag">Virtual & In-Person</span>
+          </div>
+          <a href="signup-seminar.html" class="btn-outline btn--sm">Sign Up for Seminars</a>
+        </div>
+        <div class="event-card event-card--workshop" data-animate="slide-up">
+          <div class="event-date">
+            <span class="event-month">Spring</span>
+            <span class="event-year">2026</span>
+          </div>
+          <h3>Workshop Series</h3>
+          <p>Hands-on workshops covering financial literacy, economic modeling, data analysis, and research methodology.</p>
+          <div class="event-meta">
+            <span class="event-tag">Interactive Sessions</span>
+          </div>
+          <a href="signup-workshop.html" class="btn-outline btn--sm">Sign Up for Workshops</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== COMPETITIONS ===== -->
+  <section id="competitions" class="section section--dark">
+    <div class="container">
+      <div class="section-header" data-animate="header">
+        <span class="section-tag">Challenge Yourself</span>
+        <h2 class="section-title">Competitions</h2>
+        <div class="section-rule"></div>
+        <p class="section-desc">Put your economic reasoning skills to the test.</p>
+      </div>
+      <div class="comp-layout">
+        <div class="comp-feature" data-animate="fade">
+          <span class="comp-badge-tag">2026 Competition</span>
+          <h3>ERI Annual Economics Competition</h3>
+          <p>Our flagship competition challenges students to apply economic reasoning to real-world problems. Analyze data, construct arguments, and present innovative solutions.</p>
+          <div class="comp-timeline">
+            <div class="comp-tl-item">
+              <div class="comp-tl-dot active"></div>
+              <div class="comp-tl-content">
+                <strong>May 31, 2026</strong>
+                <span>Registration Opens</span>
+              </div>
+            </div>
+            <div class="comp-tl-line"></div>
+            <div class="comp-tl-item">
+              <div class="comp-tl-dot"></div>
+              <div class="comp-tl-content">
+                <strong>June 1, 2026</strong>
+                <span>Prompt Released</span>
+              </div>
+            </div>
+            <div class="comp-tl-line"></div>
+            <div class="comp-tl-item">
+              <div class="comp-tl-dot"></div>
+              <div class="comp-tl-content">
+                <strong>June 20, 2026</strong>
+                <span>Registration Deadline</span>
+              </div>
+            </div>
+            <div class="comp-tl-line"></div>
+            <div class="comp-tl-item">
+              <div class="comp-tl-dot"></div>
+              <div class="comp-tl-content">
+                <strong>July 1, 2026</strong>
+                <span>Submission Deadline</span>
+              </div>
+            </div>
+          </div>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdjDSHGEkOSBjixUaNUgjBrnUKdPZUT8ZYpf2OgvcoJ7aFw1A/viewform?usp=publish-editor" target="_blank" class="btn-primary">
+            <span>Register for Competition</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+        <div class="comp-cards">
+          <div class="comp-info-card" data-animate="slide-left">
+            <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+            <h4>Written Analysis</h4>
+            <p>Submit a thorough economic analysis demonstrating your reasoning skills.</p>
+          </div>
+          <div class="comp-info-card" data-animate="slide-left">
+            <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg></div>
+            <h4>Prizes & Recognition</h4>
+            <p>Awards, certificates, publication opportunities, and mentorship.</p>
+          </div>
+          <div class="comp-info-card" data-animate="slide-left">
+            <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <h4>Open to All</h4>
+            <p>Students of all backgrounds and experience levels are welcome.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PEOPLE ===== -->
+  <section id="people" class="section">
+    <div class="container">
+      <div class="section-header" data-animate="header">
+        <span class="section-tag">Our Team</span>
+        <h2 class="section-title">People</h2>
+        <div class="section-rule"></div>
+        <p class="section-desc">Meet the individuals driving the Economic Reasoning Initiative.</p>
+      </div>
+      <div class="team-grid">
+        <div class="team-card" data-animate="card">
+          <div class="team-img">
+            <img src="assets/img/viyan-patel.jpeg" alt="Viyan Patel">
+          </div>
+          <div class="team-info">
+            <h4>Viyan Patel</h4>
+            <span>Founder & Director</span>
+          </div>
+        </div>
+        <div class="team-card" data-animate="card">
+          <div class="team-img">
+            <div class="team-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          </div>
+          <div class="team-info">
+            <h4>Abhinav Nidadavolu</h4>
+            <span>Logistics Coordinator</span>
+          </div>
+        </div>
+        <div class="team-card" data-animate="card">
+          <div class="team-img">
+            <div class="team-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          </div>
+          <div class="team-info">
+            <h4>Rishik Vihaan</h4>
+            <span>Head Event Coordinator</span>
+          </div>
+        </div>
+      </div>
+      <div class="join-cta" data-animate="fade">
+        <div class="join-content">
+          <h3>Join Our Team</h3>
+          <p>We're always looking for passionate individuals who want to make economics education more accessible.</p>
+          <div class="join-roles">
+            <span>Writers</span><span>Tutors</span><span>Event Organizers</span><span>Researchers</span><span>Designers</span>
+          </div>
+        </div>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdjDSHGEkOSBjixUaNUgjBrnUKdPZUT8ZYpf2OgvcoJ7aFw1A/viewform?usp=publish-editor" target="_blank" class="btn-outline">
+          <span>Apply Now</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BLOG ===== -->
+  <section id="blog" class="section section--alt">
+    <div class="container">
+      <div class="section-header" data-animate="header">
+        <span class="section-tag">Insights & Analysis</span>
+        <h2 class="section-title">Blog</h2>
+        <div class="section-rule"></div>
+        <p class="section-desc">Economics articles written by students and experts.</p>
+      </div>
+      <div class="blog-promise" data-animate="fade">
+        <div class="blog-promise-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+        <h3>Launching Fall 2026</h3>
+        <p>Student-written essays on inflation, behavioral economics, and global trade — published monthly. Want to be the first to read them?</p>
+        <a href="mailto:contact@economicreasoning.org?subject=Notify%20me%20when%20the%20ERI%20Blog%20launches" class="btn-outline btn--sm">
+          <span>Notify Me</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TUTORING ===== -->
+  <section id="tutoring" class="section">
+    <div class="container">
+      <div class="section-header" data-animate="header">
+        <span class="section-tag">1-on-1 Support</span>
+        <h2 class="section-title">Tutoring</h2>
+        <div class="section-rule"></div>
+        <p class="section-desc">Book a session with an experienced economics and finance tutor.</p>
+      </div>
+      <div class="tutor-layout">
+        <div class="tutor-features" data-animate="fade">
+          <div class="tutor-feature">
+            <div class="tutor-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+            <div>
+              <h4>Economics Fundamentals</h4>
+              <p>Micro & macroeconomics, supply and demand, market structures.</p>
+            </div>
+          </div>
+          <div class="tutor-feature">
+            <div class="tutor-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+            <div>
+              <h4>Finance & Investing</h4>
+              <p>Financial literacy, investment principles, and personal finance.</p>
+            </div>
+          </div>
+          <div class="tutor-feature">
+            <div class="tutor-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+            <div>
+              <h4>Data & Analysis</h4>
+              <p>Economic data interpretation and quantitative analysis.</p>
+            </div>
+          </div>
+          <div class="tutor-feature">
+            <div class="tutor-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+            <div>
+              <h4>Business Competition Prep</h4>
+              <p>Guidance and preparation for business competitions like DECA, FBLA, and other external contests.</p>
+            </div>
+          </div>
+        </div>
+        <div class="tutor-form" data-animate="slide-left">
+          <div class="form-card">
+            <h3>Book a Tutor</h3>
+            <p>Fill out the form and we'll match you with the right tutor.</p>
+            <form id="bookingForm">
+              <div class="form-group">
+                <label for="tutorName">Full Name</label>
+                <input type="text" id="tutorName" placeholder="Your name" required>
+              </div>
+              <div class="form-group">
+                <label for="tutorEmail">Email</label>
+                <input type="email" id="tutorEmail" placeholder="your@email.com" required>
+              </div>
+              <div class="form-group">
+                <label for="tutorSubject">Subject Area</label>
+                <select id="tutorSubject" required>
+                  <option value="" disabled selected>Select a subject</option>
+                  <option value="Microeconomics">Microeconomics</option>
+                  <option value="Macroeconomics">Macroeconomics</option>
+                  <option value="Finance & Investing">Finance & Investing</option>
+                  <option value="Data & Analysis">Data & Analysis</option>
+                  <option value="Business Competition Prep">Business Competition Prep</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="tutorMsg">Tell us about your goals</label>
+                <textarea id="tutorMsg" rows="3" placeholder="What would you like to focus on?"></textarea>
+              </div>
+              <button type="submit" class="btn-primary btn--full">Request a Session</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RESOURCES ===== -->
+  <section id="resources" class="section section--dark">
+    <div class="container">
+      <div class="section-header" data-animate="header">
+        <span class="section-tag">Level Up</span>
+        <h2 class="section-title">Resources</h2>
+        <div class="section-rule"></div>
+        <p class="section-desc">Your toolkit for mastering economics &mdash; curated platforms, guides, and more.</p>
+      </div>
+
+      <div class="resource-hero" data-animate="fade">
+        <div class="resource-hero-content">
+          <span class="resource-badge">Start Learning Now</span>
+          <h3>ERI Learning Platform</h3>
+          <p>Interactive economics training with lessons, practice problems, and progress tracking &mdash; built to sharpen your reasoning skills from day one.</p>
+          <a href="https://trainer.econstax.com" target="_blank" class="btn-outline">
+            <span>Launch Platform</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </a>
+        </div>
+        <div class="resource-visual">
+          <div class="orbit">
+            <div class="orbit-ring"></div>
+            <div class="orbit-ring orbit-ring--2"></div>
+            <div class="orbit-dot"></div>
+            <div class="orbit-dot orbit-dot--2"></div>
+            <div class="orbit-center">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="social-bar" data-animate="fade">
+        <h3>Connect With Us</h3>
+        <div class="social-links">
+          <a href="https://instagram.com/economics_reasoning_initiative" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg></a>
+          <a href="mailto:contact@eri.org" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/img/eri-logo-plain.png" alt="Economic Reasoning Initiative" class="footer-logo">
+          <p>Empowering economic reasoning, one student at a time.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Sections</h4>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#story">Our Story</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#competitions">Competitions</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>More</h4>
+          <ul>
+            <li><a href="#people">People</a></li>
+            <li><a href="#blog">Blog</a></li>
+            <li><a href="#tutoring">Tutoring</a></li>
+            <li><a href="#resources">Resources</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="https://trainer.econstax.com" target="_blank">Learn Platform</a></li>
+            <li><a href="https://instagram.com/economics_reasoning_initiative" target="_blank">Instagram</a></li>
+            <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdjDSHGEkOSBjixUaNUgjBrnUKdPZUT8ZYpf2OgvcoJ7aFw1A/viewform?usp=publish-editor" target="_blank">Apply to Join</a></li>
+            <li><a href="mailto:contact@eri.org">Email Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Economic Reasoning Initiative. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

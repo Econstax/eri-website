@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ERI Admin — Signups</title>
+  <link rel="icon" type="image/png" href="assets/img/eri-logo-plain.png">
+  <link rel="apple-touch-icon" href="assets/img/eri-logo-plain.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+  <style>
+    :root{--navy:#1B2A4A;--navy-dark:#0D1520;--gold:#C6A84E;--gold-light:#D4BA6A;--gold-dark:#A8893A;--off:#F8F8F6;--g100:#F0F0EC;--g200:#E2E2DE;--g400:#8A8A86;--txt:#1B2A4A;--txt2:#4A5568;--r:14px;--ease:cubic-bezier(.16,1,.3,1)}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',-apple-system,sans-serif;background:var(--off);color:var(--txt);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+    .top{background:var(--navy-dark);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,.2)}
+    .top-l{display:flex;align-items:center;gap:10px}
+    .top-l img{width:30px;height:30px;object-fit:contain}
+    .top-l h1{font-family:'Playfair Display',serif;font-size:1.05rem;color:#fff}
+    .badge{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--navy-dark);background:var(--gold);padding:3px 10px;border-radius:50px;margin-left:8px}
+    .top-r{display:flex;align-items:center;gap:14px}
+    .top-r a{font-size:.78rem;color:rgba(255,255,255,.4);text-decoration:none;transition:color .3s}
+    .top-r a:hover{color:var(--gold)}
+    .logout{font-family:'Inter',sans-serif;font-size:.75rem;font-weight:600;color:#fff;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);padding:7px 16px;border-radius:8px;cursor:pointer;transition:all .3s var(--ease)}
+    .logout:hover{background:rgba(248,113,113,.12);border-color:rgba(248,113,113,.25);color:#f87171}
+
+    .dash{max-width:1100px;margin:0 auto;padding:32px 24px 60px}
+
+    .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:32px;animation:fu .6s var(--ease) both}
+    @keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+    .sc{background:#fff;border:1px solid var(--g200);border-radius:var(--r);padding:20px 22px;transition:all .4s var(--ease)}
+    .sc:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(27,42,74,.06)}
+    .sc-label{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--g400);margin-bottom:6px}
+    .sc-val{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--navy)}
+    .sc-val .a{color:var(--gold)}
+
+    .tabs{display:flex;gap:3px;margin-bottom:22px;background:#fff;border:1px solid var(--g200);border-radius:8px;padding:3px;width:fit-content;animation:fu .6s .1s var(--ease) both;flex-wrap:wrap}
+    .tab{font-family:'Inter',sans-serif;font-size:.75rem;font-weight:600;padding:9px 18px;border:none;border-radius:6px;background:transparent;color:var(--txt2);cursor:pointer;transition:all .3s var(--ease)}
+    .tab:hover{color:var(--navy);background:var(--g100)}
+    .tab.on{background:var(--navy);color:#fff;box-shadow:0 2px 8px rgba(27,42,74,.12)}
+
+    .tw{background:#fff;border:1px solid var(--g200);border-radius:var(--r);overflow:hidden;animation:fu .6s .2s var(--ease) both}
+    .th{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--g200);flex-wrap:wrap;gap:12px}
+    .th-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--navy)}
+    .th-count{font-size:.72rem;color:var(--g400);margin-left:8px}
+    .th-actions{display:flex;gap:8px}
+    .abtn{font-family:'Inter',sans-serif;font-size:.72rem;font-weight:600;padding:7px 14px;border-radius:6px;border:1px solid var(--g200);background:#fff;color:var(--txt2);cursor:pointer;transition:all .3s var(--ease);display:flex;align-items:center;gap:5px}
+    .abtn:hover{border-color:var(--gold);color:var(--gold-dark);background:rgba(198,168,78,.03)}
+    .abtn.dng:hover{border-color:#f87171;color:#dc2626;background:rgba(248,113,113,.03)}
+
+    table{width:100%;border-collapse:collapse}
+    thead th{text-align:left;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--g400);padding:12px 18px;border-bottom:1px solid var(--g200);background:var(--off)}
+    tbody tr{transition:background .2s}
+    tbody tr:hover{background:rgba(198,168,78,.02)}
+    tbody td{padding:13px 18px;font-size:.82rem;color:var(--txt);border-bottom:1px solid var(--g100);vertical-align:top}
+    .cn{font-weight:600}.ce{color:var(--txt2)}.cd{font-size:.75rem;color:var(--g400);white-space:nowrap}
+    .cdt{font-size:.78rem;color:var(--txt2);max-width:260px;line-height:1.5}
+    .bdg{display:inline-block;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:50px}
+    .bdg-c{background:rgba(198,168,78,.08);color:var(--gold-dark)}
+    .bdg-t{background:rgba(27,42,74,.06);color:var(--navy)}
+    .bdg-s{background:rgba(34,197,94,.08);color:#16a34a}
+    .bdg-w{background:rgba(99,102,241,.08);color:#6366f1}
+
+    .empty{text-align:center;padding:56px 24px;color:var(--g400)}
+    .empty svg{width:44px;height:44px;margin-bottom:14px;opacity:.25}
+    .empty p{font-size:.88rem;margin-bottom:4px}
+    .empty small{font-size:.75rem}
+
+    .rdel{background:none;border:none;color:var(--g400);cursor:pointer;padding:4px 6px;border-radius:4px;transition:all .2s;font-size:.8rem}
+    .rdel:hover{color:#dc2626;background:rgba(248,113,113,.06)}
+
+    @media(max-width:768px){.stats{grid-template-columns:repeat(2,1fr)}.top{padding:12px 16px}.dash{padding:20px 14px}.tw{overflow-x:auto}table{min-width:650px}.th{flex-direction:column;align-items:flex-start}}
+    @media(max-width:480px){.stats{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div class="top-l">
+      <img src="assets/img/eri-logo-plain.png" alt="ERI">
+      <h1>ERI Dashboard</h1>
+      <span class="badge">Admin</span>
+    </div>
+    <div class="top-r">
+      <a href="index.html">View Site</a>
+      <button class="logout" id="logout">Log Out</button>
+    </div>
+  </div>
+
+  <div class="dash">
+    <div class="stats">
+      <div class="sc"><div class="sc-label">Total Signups</div><div class="sc-val" id="totalC">—</div></div>
+      <div class="sc"><div class="sc-label">Camp</div><div class="sc-val"><span class="a" id="campC">—</span></div></div>
+      <div class="sc"><div class="sc-label">Seminars</div><div class="sc-val"><span class="a" id="seminarC">—</span></div></div>
+      <div class="sc"><div class="sc-label">Workshops</div><div class="sc-val"><span class="a" id="workshopC">—</span></div></div>
+      <div class="sc"><div class="sc-label">Tutoring</div><div class="sc-val"><span class="a" id="tutorC">—</span></div></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab on" data-t="all">All</button>
+      <button class="tab" data-t="camp">Camp</button>
+      <button class="tab" data-t="seminar">Seminars</button>
+      <button class="tab" data-t="workshop">Workshops</button>
+      <button class="tab" data-t="tutoring">Tutoring</button>
+    </div>
+
+    <div class="tw">
+      <div class="th">
+        <div><span class="th-title">Submissions</span><span class="th-count" id="tcount"></span></div>
+        <div class="th-actions">
+          <button class="abtn" id="exportBtn"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export CSV</button>
+          <button class="abtn dng" id="clearBtn"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Clear All</button>
+        </div>
+      </div>
+      <div id="tbody"></div>
+    </div>
+  </div>
+
+  <script>
+    // Auth guard
+    if(sessionStorage.getItem('eri_admin')!=='true') location.href='admineri.html';
+    document.getElementById('logout').onclick=()=>{sessionStorage.removeItem('eri_admin');location.href='admineri.html'};
+
+    // Supabase config
+    const SB_URL='https://oliaowomacdkwgmbdnhb.supabase.co';
+    const SB_KEY='sb_publishable_OlLcofeNEZpeyv57dJWkAg_zMsRcHte';
+    let sb=null;
+    function initSB(){if(window.supabase&&SB_KEY!=='YOUR_ANON_KEY_HERE')sb=window.supabase.createClient(SB_URL,SB_KEY)}
+
+    // Generic fetch helper
+    async function fetchTable(table, type) {
+      if (sb) {
+        const { data } = await sb.from(table).select('*').order('created_at', { ascending: false });
+        return (data || []).map(e => ({ ...e, type }));
+      }
+      return (JSON.parse(localStorage.getItem('eri_' + table) || '[]')).map(e => ({ ...e, type }));
+    }
+
+    const tables = {
+      camp: 'camp_signups',
+      seminar: 'seminar_signups',
+      workshop: 'workshop_signups',
+      tutoring: 'tutoring_signups'
+    };
+
+    let tab = 'all';
+
+    async function getAll() {
+      const [camp, seminar, workshop, tutoring] = await Promise.all([
+        fetchTable('camp_signups', 'camp'),
+        fetchTable('seminar_signups', 'seminar'),
+        fetchTable('workshop_signups', 'workshop'),
+        fetchTable('tutoring_signups', 'tutoring')
+      ]);
+      return [...camp, ...seminar, ...workshop, ...tutoring].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    }
+
+    async function getFiltered() {
+      const all = await getAll();
+      return tab === 'all' ? all : all.filter(e => e.type === tab);
+    }
+
+    function fmtDate(s) {
+      if (!s) return '—';
+      const d = new Date(s);
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ' ' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function getName(e) {
+      if (e.first_name && e.last_name) return e.first_name + ' ' + e.last_name;
+      return e.name || '—';
+    }
+
+    const bdgClass = { camp: 'bdg-c', seminar: 'bdg-s', workshop: 'bdg-w', tutoring: 'bdg-t' };
+    const bdgLabel = { camp: 'Camp', seminar: 'Seminar', workshop: 'Workshop', tutoring: 'Tutoring' };
+
+    async function renderStats() {
+      const all = await getAll();
+      const counts = { camp: 0, seminar: 0, workshop: 0, tutoring: 0 };
+      all.forEach(e => counts[e.type]++);
+      document.getElementById('campC').textContent = counts.camp;
+      document.getElementById('seminarC').textContent = counts.seminar;
+      document.getElementById('workshopC').textContent = counts.workshop;
+      document.getElementById('tutorC').textContent = counts.tutoring;
+      document.getElementById('totalC').textContent = all.length;
+    }
+
+    function getDetails(e) {
+      let det = '';
+      if (e.type === 'camp') {
+        det = `<b>Age:</b> ${e.age || '—'} &middot; <b>Grade:</b> ${e.grade || '—'}`;
+        if (e.school) det += `<br><b>School:</b> ${e.school}`;
+        if (e.parent_first_name) det += `<br><b>Parent:</b> ${e.parent_first_name} ${e.parent_last_name || ''} (${e.parent_email || '—'})`;
+        if (e.birthdate) det += `<br><b>DOB:</b> ${e.birthdate}`;
+      } else if (e.type === 'seminar') {
+        if (e.phone) det = `<b>Phone:</b> ${e.phone}`;
+        else det = '—';
+      } else if (e.type === 'workshop') {
+        det = `<b>Age:</b> ${e.age || '—'}`;
+        if (e.phone) det += ` &middot; <b>Phone:</b> ${e.phone}`;
+      } else {
+        det = `<b>Subject:</b> ${e.subject || '—'}`;
+        if (e.message) det += `<br><b>Note:</b> ${e.message}`;
+      }
+      return det;
+    }
+
+    async function render() {
+      const entries = await getFiltered();
+      const el = document.getElementById('tbody');
+      document.getElementById('tcount').textContent = `(${entries.length} ${entries.length === 1 ? 'entry' : 'entries'})`;
+
+      if (!entries.length) {
+        el.innerHTML = '<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><p>No submissions yet</p><small>Signups from the website will appear here.</small></div>';
+        return;
+      }
+
+      let h = '<table><thead><tr><th>Type</th><th>Name</th><th>Email</th><th>Details</th><th>Date</th><th></th></tr></thead><tbody>';
+      entries.forEach(e => {
+        const bdg = `<span class="bdg ${bdgClass[e.type]}">${bdgLabel[e.type]}</span>`;
+        h += `<tr><td>${bdg}</td><td class="cn">${getName(e)}</td><td class="ce">${e.email || '—'}</td><td class="cdt">${getDetails(e)}</td><td class="cd">${fmtDate(e.created_at)}</td><td><button class="rdel" data-id="${e.id}" data-type="${e.type}">&times;</button></td></tr>`;
+      });
+      h += '</tbody></table>';
+      el.innerHTML = h;
+
+      el.querySelectorAll('.rdel').forEach(b => b.onclick = async () => {
+        const id = b.dataset.id, type = b.dataset.type, tbl = tables[type];
+        if (sb) { await sb.from(tbl).delete().eq('id', id); }
+        else { const k = 'eri_' + tbl; const d = JSON.parse(localStorage.getItem(k) || '[]').filter(e => e.id !== id); localStorage.setItem(k, JSON.stringify(d)); }
+        renderStats(); render();
+      });
+    }
+
+    // Tabs
+    document.querySelectorAll('.tab').forEach(b => b.onclick = () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('on')); b.classList.add('on'); tab = b.dataset.t; render();
+    });
+
+    // Export CSV
+    document.getElementById('exportBtn').onclick = async () => {
+      const entries = await getFiltered(); if (!entries.length) return;
+      const hdr = ['Type', 'First Name', 'Last Name', 'Email', 'Phone', 'Age', 'Grade', 'School', 'Birthdate', 'Parent Name', 'Parent Email', 'Subject', 'Message', 'Date'];
+      const rows = entries.map(e => [
+        e.type,
+        e.first_name || e.name || '', e.last_name || '',
+        e.email || '', e.phone || '',
+        e.age || '', e.grade || '', e.school || '', e.birthdate || '',
+        e.parent_first_name ? (e.parent_first_name + ' ' + (e.parent_last_name || '')) : '',
+        e.parent_email || '',
+        e.subject || '', e.message || e.why || '',
+        e.created_at || ''
+      ]);
+      let csv = hdr.join(',') + '\n';
+      rows.forEach(r => { csv += r.map(v => '"' + String(v).replace(/"/g, '""') + '"').join(',') + '\n'; });
+      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = `eri-signups-${new Date().toISOString().slice(0, 10)}.csv`; a.click();
+    };
+
+    // Clear
+    document.getElementById('clearBtn').onclick = async () => {
+      if (!confirm('Delete ALL submissions in this view? This cannot be undone.')) return;
+      const typesToClear = tab === 'all' ? Object.keys(tables) : [tab];
+      for (const type of typesToClear) {
+        const tbl = tables[type];
+        if (sb) { await sb.from(tbl).delete().neq('id', '00000000-0000-0000-0000-000000000000'); }
+        else { localStorage.removeItem('eri_' + tbl); }
+      }
+      renderStats(); render();
+    };
+
+    // Init
+    window.addEventListener('load', () => { initSB(); renderStats(); render(); });
+    setTimeout(() => { renderStats(); render(); }, 500);
+  </script>
+</body>
+</html>

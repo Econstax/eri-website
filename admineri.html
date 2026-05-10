@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ERI Admin</title>
+  <link rel="icon" type="image/png" href="assets/img/eri-logo-plain.png">
+  <link rel="apple-touch-icon" href="assets/img/eri-logo-plain.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',-apple-system,sans-serif;background:#0D1520;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;-webkit-font-smoothing:antialiased}
+    .bg{position:fixed;inset:0;background:linear-gradient(160deg,#060a10,#0D1520 40%,#1B2A4A)}
+    .bg::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(198,168,78,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(198,168,78,.015) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 20%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 20%,transparent 70%)}
+    .card{position:relative;z-index:1;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);backdrop-filter:blur(20px);border-radius:22px;padding:56px 48px;width:420px;max-width:90vw;text-align:center;animation:cardIn .8s cubic-bezier(.16,1,.3,1) both}
+    @keyframes cardIn{from{opacity:0;transform:translateY(30px) scale(.97)}to{opacity:1;transform:none}}
+    .logo{width:64px;height:64px;object-fit:contain;margin:0 auto 24px;display:block}
+    h1{font-family:'Playfair Display',serif;font-size:1.5rem;color:#fff;margin-bottom:6px}
+    .sub{font-size:.82rem;color:rgba(255,255,255,.35);margin-bottom:36px}
+    input{width:100%;padding:14px 18px;font-family:'Inter',sans-serif;font-size:.95rem;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:10px;color:#fff;outline:none;text-align:center;letter-spacing:.15em;transition:all .35s cubic-bezier(.16,1,.3,1);margin-bottom:18px}
+    input::placeholder{color:rgba(255,255,255,.2);letter-spacing:.1em}
+    input:focus{border-color:#C6A84E;background:rgba(198,168,78,.04);box-shadow:0 0 0 3px rgba(198,168,78,.06)}
+    button{width:100%;padding:14px;font-family:'Inter',sans-serif;font-size:.95rem;font-weight:600;background:linear-gradient(135deg,#C6A84E,#D4BA6A);color:#0D1520;border:none;border-radius:10px;cursor:pointer;transition:all .4s cubic-bezier(.16,1,.3,1)}
+    button:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(198,168,78,.25)}
+    .err{color:#f87171;font-size:.78rem;margin-top:8px;opacity:0;transform:translateY(-5px);transition:all .3s cubic-bezier(.16,1,.3,1)}
+    .err.show{opacity:1;transform:none}
+    .back{display:inline-block;margin-top:28px;font-size:.75rem;color:rgba(255,255,255,.25);text-decoration:none;transition:color .3s}
+    .back:hover{color:#C6A84E}
+    .shake{animation:shake .5s cubic-bezier(.16,1,.3,1)}
+    @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="card" id="c">
+    <img src="assets/img/eri-logo-plain.png" alt="ERI" class="logo">
+    <h1>Admin Access</h1>
+    <p class="sub">Enter your admin code to continue</p>
+    <form id="f">
+      <input type="password" id="code" placeholder="Enter code" autocomplete="off" autofocus>
+      <button type="submit">Authenticate</button>
+      <p class="err" id="err">Invalid access code. Try again.</p>
+    </form>
+    <a href="index.html" class="back">&larr; Back to site</a>
+  </div>
+  <script>
+    document.getElementById('f').addEventListener('submit',e=>{
+      e.preventDefault();
+      const input=document.getElementById('code'),err=document.getElementById('err'),card=document.getElementById('c');
+      if(input.value==='reasonwithecon'){
+        sessionStorage.setItem('eri_admin','true');
+        const btn=e.target.querySelector('button');
+        btn.textContent='Access Granted';btn.style.background='linear-gradient(135deg,#22c55e,#16a34a)';btn.style.color='#fff';
+        card.style.transition='all .5s cubic-bezier(.16,1,.3,1)';
+        setTimeout(()=>{card.style.transform='translateY(-20px) scale(.97)';card.style.opacity='0';setTimeout(()=>location.href='signups.html',300)},600);
+      }else{
+        err.classList.add('show');card.classList.add('shake');input.style.borderColor='#f87171';
+        setTimeout(()=>{card.classList.remove('shake');input.style.borderColor=''},600);
+        setTimeout(()=>err.classList.remove('show'),3000);
+        input.value='';input.focus();
+      }
+    });
+  </script>
+</body>
+</html>
